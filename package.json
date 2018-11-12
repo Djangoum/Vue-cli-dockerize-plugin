@@ -1,10 +1,14 @@
 {
   "name": "vue-cli-plugin-dockerize",
-  "version": "0.0.5",
+  "version": "0.0.7",
   "description": "Dockerize easily your vuejs application ",
   "main": "index.js",
   "scripts": {
     "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Djangoum/Vue-cli-dockerize-plugin"
   },
   "keywords": [
     "docker",

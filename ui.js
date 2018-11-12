@@ -6,12 +6,7 @@ module.exports = api => {
         name: 'Dockerize Configuration',
         // Shown below the name
         description: 'Dockerize your app quick and easy to share your development with docker',
-
-        icon: 'local_shipping',
         files : {
-            dockerize : {
-                js: ['dockerize.config.js'],
-            },
             vue: {
                 js: ['vue.config.js']
             }
@@ -20,24 +15,31 @@ module.exports = api => {
         onRead: ({ data, cwd }) => ({
             tabs: [
                 {
-                  id: 'General configuration',
-                  label: 'General',
-                  // Optional
-                  icon: 'Docker related configuration',
-                  prompts: [
+                    id: 'General configuration',
+                    label: 'General',
+                    // Optional
+                    icon: 'Docker related configuration',
+                    prompts: [
                     {
                         name: 'imageName',
                         type: 'input',
+                        message : 'Name for your docker image',
                         default: 'testimage',
-                        description: 'Name for your docker image'
+                        description: 'This will be used to create an image of your application in order to create a container or to publish it to your docker hub. This name will be used also if you run a container with the previously created image.',
+                        value: data.vue.pluginOptions.dockerize.imageName,
+                        group: 'Docker configuration'
                     }
-                  ]
+                    ]
                 }
-              ]
-          }),
+                ]
+            }),
 
-          onWrite: ({ prompts, answers, data, files, cwd, api }) => {
-            // ...
-          }
+          onWrite: ({ prompts, api, answers }) => {            
+            api.setData('vue', { pluginOptions : {
+                dockerize : {
+                    imageName : answers.imageName
+                }
+            }});
+        } 
       });
   }

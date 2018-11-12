@@ -66,8 +66,10 @@ module.exports = (api, options) => {
                 }
             }
             }, function (err, data, container) {
-                console.log(err);
-                console.log(data);
+                if(err)
+                    console.log(err);
+
+                console.log(data.stream);
             }); 
     }
 
@@ -100,15 +102,14 @@ module.exports = (api, options) => {
 
     function StartContainer(docker) {
         docker.listContainers({ all : true }, function (err, containers) {
-            console.log(err);
-            console.log(containers);
+
+            if(err)
+                console.log(err);
+
             containers.forEach(function (containerInfo) {
-                console.log(containerInfo.Names);
                 if(containerInfo.Names.includes("/" + options.pluginOptions.dockerize.imageName + "_dockerized")) {
                     var container = docker.getContainer(containerInfo.Id);
-
                     container.start();
-
                     container.attach({stream: true, stdout: true, stderr: true}, function (err, stream) {
                         stream.pipe(process.stdout);
                       });
